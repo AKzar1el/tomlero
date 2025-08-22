@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import type { Document, Types } from 'mongoose';
 import { CursorPaginationParams } from '~/common';
+=======
+import { Document, Types } from 'mongoose';
+>>>>>>> 294faaa7 (init)
 
 export interface IUser extends Document {
   name?: string;
@@ -49,6 +53,7 @@ export interface BalanceConfig {
   refillAmount?: number;
 }
 
+<<<<<<< HEAD
 export interface CreateUserRequest extends Partial<IUser> {
   email: string;
 }
@@ -69,10 +74,18 @@ export interface UpdateUserRequest {
 }
 
 export interface UserDeleteResult {
+=======
+export interface UserCreateData extends Partial<IUser> {
+  email: string;
+}
+
+export interface UserUpdateResult {
+>>>>>>> 294faaa7 (init)
   deletedCount: number;
   message: string;
 }
 
+<<<<<<< HEAD
 export interface UserFilterOptions extends CursorPaginationParams {
   _id?: Types.ObjectId | string;
   // Includes email, username and name
@@ -82,6 +95,11 @@ export interface UserFilterOptions extends CursorPaginationParams {
   provider?: string;
   twoFactorEnabled?: boolean;
   // External IDs
+=======
+export interface UserSearchCriteria {
+  email?: string;
+  username?: string;
+>>>>>>> 294faaa7 (init)
   googleId?: string;
   facebookId?: string;
   openidId?: string;
@@ -90,9 +108,13 @@ export interface UserFilterOptions extends CursorPaginationParams {
   githubId?: string;
   discordId?: string;
   appleId?: string;
+<<<<<<< HEAD
   // Date filters
   createdAfter?: string;
   createdBefore?: string;
+=======
+  _id?: Types.ObjectId | string;
+>>>>>>> 294faaa7 (init)
 }
 
 export interface UserQueryOptions {

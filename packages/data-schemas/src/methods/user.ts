@@ -1,5 +1,9 @@
 import mongoose, { FilterQuery } from 'mongoose';
+<<<<<<< HEAD
 import type { IUser, BalanceConfig, CreateUserRequest, UserDeleteResult } from '~/types';
+=======
+import type { IUser, BalanceConfig, UserCreateData, UserUpdateResult } from '~/types';
+>>>>>>> 294faaa7 (init)
 import { signPayload } from '~/crypto';
 
 /** Factory function that takes mongoose instance and returns the methods */
@@ -31,7 +35,11 @@ export function createUserMethods(mongoose: typeof import('mongoose')) {
    * Creates a new user, optionally with a TTL of 1 week.
    */
   async function createUser(
+<<<<<<< HEAD
     data: CreateUserRequest,
+=======
+    data: UserCreateData,
+>>>>>>> 294faaa7 (init)
     balanceConfig?: BalanceConfig,
     disableTTL: boolean = true,
     returnUser: boolean = false,
@@ -123,7 +131,11 @@ export function createUserMethods(mongoose: typeof import('mongoose')) {
   /**
    * Delete a user by their unique ID.
    */
+<<<<<<< HEAD
   async function deleteUserById(userId: string): Promise<UserDeleteResult> {
+=======
+  async function deleteUserById(userId: string): Promise<UserUpdateResult> {
+>>>>>>> 294faaa7 (init)
     try {
       const User = mongoose.models.User;
       const result = await User.deleteOne({ _id: userId });

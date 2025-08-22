@@ -3,7 +3,11 @@ const { SerpAPI } = require('@langchain/community/tools/serpapi');
 const { Calculator } = require('@langchain/community/tools/calculator');
 const { mcpToolPattern, loadWebSearchAuth } = require('@librechat/api');
 const { EnvVar, createCodeExecutionTool, createSearchTool } = require('@librechat/agents');
+<<<<<<< HEAD
 const { Tools, Constants, EToolResources, replaceSpecialVars } = require('librechat-data-provider');
+=======
+const { Tools, EToolResources, replaceSpecialVars } = require('librechat-data-provider');
+>>>>>>> 294faaa7 (init)
 const {
   availableTools,
   manifestToolMap,
@@ -24,9 +28,15 @@ const {
 const { primeFiles: primeCodeFiles } = require('~/server/services/Files/Code/process');
 const { createFileSearchTool, primeFiles: primeSearchFiles } = require('./fileSearch');
 const { getUserPluginAuthValue } = require('~/server/services/PluginService');
+<<<<<<< HEAD
 const { createMCPTool, createMCPTools } = require('~/server/services/MCP');
 const { loadAuthValues } = require('~/server/services/Tools/credentials');
 const { getCachedTools } = require('~/server/services/Config');
+=======
+const { loadAuthValues } = require('~/server/services/Tools/credentials');
+const { getCachedTools } = require('~/server/services/Config');
+const { createMCPTool } = require('~/server/services/MCP');
+>>>>>>> 294faaa7 (init)
 
 /**
  * Validates the availability and authentication of tools for a user based on environment variables or user-specific plugin authentication values.
@@ -123,8 +133,11 @@ const getAuthFields = (toolKey) => {
  *
  * @param {object} object
  * @param {string} object.user
+<<<<<<< HEAD
  * @param {Record<string, Record<string, string>>} [object.userMCPAuthMap]
  * @param {AbortSignal} [object.signal]
+=======
+>>>>>>> 294faaa7 (init)
  * @param {Pick<Agent, 'id' | 'provider' | 'model'>} [object.agent]
  * @param {string} [object.model]
  * @param {EModelEndpoint} [object.endpoint]
@@ -139,9 +152,13 @@ const loadTools = async ({
   user,
   agent,
   model,
+<<<<<<< HEAD
   signal,
   endpoint,
   userMCPAuthMap,
+=======
+  endpoint,
+>>>>>>> 294faaa7 (init)
   tools = [],
   options = {},
   functions = true,
@@ -235,7 +252,10 @@ const loadTools = async ({
   /** @type {Record<string, string>} */
   const toolContextMap = {};
   const cachedTools = (await getCachedTools({ userId: user, includeGlobal: true })) ?? {};
+<<<<<<< HEAD
   const requestedMCPTools = {};
+=======
+>>>>>>> 294faaa7 (init)
 
   for (const tool of tools) {
     if (tool === Tools.execute_code) {
@@ -304,6 +324,7 @@ Current Date & Time: ${replaceSpecialVars({ text: '{{iso_datetime}}' })}
       };
       continue;
     } else if (tool && cachedTools && mcpToolPattern.test(tool)) {
+<<<<<<< HEAD
       const [toolName, serverName] = tool.split(Constants.mcp_delimiter);
       if (toolName === Constants.mcp_all) {
         const currentMCPGenerator = async (index) =>
@@ -333,6 +354,16 @@ Current Date & Time: ${replaceSpecialVars({ text: '{{iso_datetime}}' })}
         });
       requestedMCPTools[serverName] = requestedMCPTools[serverName] || [];
       requestedMCPTools[serverName].push(currentMCPGenerator);
+=======
+      requestedTools[tool] = async () =>
+        createMCPTool({
+          req: options.req,
+          res: options.res,
+          toolKey: tool,
+          model: agent?.model ?? model,
+          provider: agent?.provider ?? endpoint,
+        });
+>>>>>>> 294faaa7 (init)
       continue;
     }
 
@@ -372,6 +403,7 @@ Current Date & Time: ${replaceSpecialVars({ text: '{{iso_datetime}}' })}
   }
 
   const loadedTools = (await Promise.all(toolPromises)).flatMap((plugin) => plugin || []);
+<<<<<<< HEAD
   const mcpToolPromises = [];
   /** MCP server tools are initialized sequentially by server */
   let index = -1;
@@ -400,6 +432,8 @@ Current Date & Time: ${replaceSpecialVars({ text: '{{iso_datetime}}' })}
     }
   }
   loadedTools.push(...(await Promise.all(mcpToolPromises)).flatMap((plugin) => plugin || []));
+=======
+>>>>>>> 294faaa7 (init)
   return { loadedTools, toolContextMap };
 };
 

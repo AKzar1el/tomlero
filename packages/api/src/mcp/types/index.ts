@@ -134,5 +134,8 @@ export interface OAuthConnectionOptions {
   oauthStart?: (authURL: string) => Promise<void>;
   oauthEnd?: () => Promise<void>;
   returnOnOAuth?: boolean;
+<<<<<<< HEAD
   connectionTimeout?: number;
+=======
+>>>>>>> 294faaa7 (init)
 }

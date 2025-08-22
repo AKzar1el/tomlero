@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 const crypto = require('node:crypto');
 const { logger } = require('@librechat/data-schemas');
 const { ResourceType, SystemRoles, Tools, actionDelimiter } = require('librechat-data-provider');
+<<<<<<< HEAD
 const { GLOBAL_PROJECT_NAME, EPHEMERAL_AGENT_ID, mcp_all, mcp_delimiter } =
+=======
+const { GLOBAL_PROJECT_NAME, EPHEMERAL_AGENT_ID, mcp_delimiter } =
+>>>>>>> 294faaa7 (init)
   require('librechat-data-provider').Constants;
 const {
   removeAgentFromAllProjects,
@@ -78,7 +82,10 @@ const loadEphemeralAgent = async ({ req, agent_id, endpoint, model_parameters: _
     tools.push(Tools.web_search);
   }
 
+<<<<<<< HEAD
   const addedServers = new Set();
+=======
+>>>>>>> 294faaa7 (init)
   if (mcpServers.size > 0) {
     for (const toolName of Object.keys(availableTools)) {
       if (!toolName.includes(mcp_delimiter)) {
@@ -86,6 +93,7 @@ const loadEphemeralAgent = async ({ req, agent_id, endpoint, model_parameters: _
       }
       const mcpServer = toolName.split(mcp_delimiter)?.[1];
       if (mcpServer && mcpServers.has(mcpServer)) {
+<<<<<<< HEAD
         addedServers.add(mcpServer);
         tools.push(toolName);
       }
@@ -97,6 +105,11 @@ const loadEphemeralAgent = async ({ req, agent_id, endpoint, model_parameters: _
       }
       tools.push(`${mcp_all}${mcp_delimiter}${mcpServer}`);
     }
+=======
+        tools.push(toolName);
+      }
+    }
+>>>>>>> 294faaa7 (init)
   }
 
   const instructions = req.body.promptPrefix;

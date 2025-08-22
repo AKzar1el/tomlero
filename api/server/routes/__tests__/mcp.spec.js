@@ -11,7 +11,10 @@ jest.mock('@librechat/api', () => ({
     completeOAuthFlow: jest.fn(),
     generateFlowId: jest.fn(),
   },
+<<<<<<< HEAD
   getUserMCPAuthMap: jest.fn(),
+=======
+>>>>>>> 294faaa7 (init)
 }));
 
 jest.mock('@librechat/data-schemas', () => ({
@@ -38,7 +41,10 @@ jest.mock('~/models', () => ({
   updateToken: jest.fn(),
   createToken: jest.fn(),
   deleteTokens: jest.fn(),
+<<<<<<< HEAD
   findPluginAuthsByKeys: jest.fn(),
+=======
+>>>>>>> 294faaa7 (init)
 }));
 
 jest.mock('~/server/services/Config', () => ({
@@ -73,10 +79,13 @@ jest.mock('~/server/middleware', () => ({
   requireJwtAuth: (req, res, next) => next(),
 }));
 
+<<<<<<< HEAD
 jest.mock('~/server/services/Tools/mcp', () => ({
   reinitMCPServer: jest.fn(),
 }));
 
+=======
+>>>>>>> 294faaa7 (init)
 describe('MCP Routes', () => {
   let app;
   let mongoServer;
@@ -688,6 +697,7 @@ describe('MCP Routes', () => {
       require('~/config').getMCPManager.mockReturnValue(mockMcpManager);
       require('~/config').getFlowStateManager.mockReturnValue({});
       require('~/cache').getLogStores.mockReturnValue({});
+<<<<<<< HEAD
       require('~/server/services/Tools/mcp').reinitMCPServer.mockResolvedValue({
         success: true,
         message: "MCP server 'oauth-server' ready for OAuth authentication",
@@ -695,6 +705,8 @@ describe('MCP Routes', () => {
         oauthRequired: true,
         oauthUrl: 'https://oauth.example.com/auth',
       });
+=======
+>>>>>>> 294faaa7 (init)
 
       const response = await request(app).post('/api/mcp/oauth-server/reinitialize');
 
@@ -719,7 +731,10 @@ describe('MCP Routes', () => {
       require('~/config').getMCPManager.mockReturnValue(mockMcpManager);
       require('~/config').getFlowStateManager.mockReturnValue({});
       require('~/cache').getLogStores.mockReturnValue({});
+<<<<<<< HEAD
       require('~/server/services/Tools/mcp').reinitMCPServer.mockResolvedValue(null);
+=======
+>>>>>>> 294faaa7 (init)
 
       const response = await request(app).post('/api/mcp/error-server/reinitialize');
 
@@ -783,6 +798,7 @@ describe('MCP Routes', () => {
       setCachedTools.mockResolvedValue();
       updateMCPUserTools.mockResolvedValue();
 
+<<<<<<< HEAD
       require('~/server/services/Tools/mcp').reinitMCPServer.mockResolvedValue({
         success: true,
         message: "MCP server 'test-server' reinitialized successfully",
@@ -791,6 +807,8 @@ describe('MCP Routes', () => {
         oauthUrl: null,
       });
 
+=======
+>>>>>>> 294faaa7 (init)
       const response = await request(app).post('/api/mcp/test-server/reinitialize');
 
       expect(response.status).toBe(200);
@@ -805,6 +823,17 @@ describe('MCP Routes', () => {
         'test-user-id',
         'test-server',
       );
+<<<<<<< HEAD
+=======
+      expect(updateMCPUserTools).toHaveBeenCalledWith({
+        userId: 'test-user-id',
+        serverName: 'test-server',
+        tools: [
+          { name: 'tool1', description: 'Test tool 1', inputSchema: { type: 'object' } },
+          { name: 'tool2', description: 'Test tool 2', inputSchema: { type: 'object' } },
+        ],
+      });
+>>>>>>> 294faaa7 (init)
     });
 
     it('should handle server with custom user variables', async () => {
@@ -826,6 +855,7 @@ describe('MCP Routes', () => {
       require('~/config').getMCPManager.mockReturnValue(mockMcpManager);
       require('~/config').getFlowStateManager.mockReturnValue({});
       require('~/cache').getLogStores.mockReturnValue({});
+<<<<<<< HEAD
       require('@librechat/api').getUserMCPAuthMap.mockResolvedValue({
         'mcp:test-server': {
           API_KEY: 'api-key-value',
@@ -834,6 +864,11 @@ describe('MCP Routes', () => {
       require('~/models').findPluginAuthsByKeys.mockResolvedValue([
         { key: 'API_KEY', value: 'api-key-value' },
       ]);
+=======
+      require('~/server/services/PluginService').getUserPluginAuthValue.mockResolvedValue(
+        'api-key-value',
+      );
+>>>>>>> 294faaa7 (init)
 
       const { getCachedTools, setCachedTools } = require('~/server/services/Config');
       const { updateMCPUserTools } = require('~/server/services/Config/mcpToolsCache');
@@ -841,6 +876,7 @@ describe('MCP Routes', () => {
       setCachedTools.mockResolvedValue();
       updateMCPUserTools.mockResolvedValue();
 
+<<<<<<< HEAD
       require('~/server/services/Tools/mcp').reinitMCPServer.mockResolvedValue({
         success: true,
         message: "MCP server 'test-server' reinitialized successfully",
@@ -849,15 +885,23 @@ describe('MCP Routes', () => {
         oauthUrl: null,
       });
 
+=======
+>>>>>>> 294faaa7 (init)
       const response = await request(app).post('/api/mcp/test-server/reinitialize');
 
       expect(response.status).toBe(200);
       expect(response.body.success).toBe(true);
+<<<<<<< HEAD
       expect(require('@librechat/api').getUserMCPAuthMap).toHaveBeenCalledWith({
         userId: 'test-user-id',
         servers: ['test-server'],
         findPluginAuthsByKeys: require('~/models').findPluginAuthsByKeys,
       });
+=======
+      expect(
+        require('~/server/services/PluginService').getUserPluginAuthValue,
+      ).toHaveBeenCalledWith('test-user-id', 'API_KEY', false);
+>>>>>>> 294faaa7 (init)
     });
   });
 

@@ -1525,8 +1525,11 @@ export enum Constants {
   CONFIG_VERSION = '1.2.8',
   /** Standard value for the first message's `parentMessageId` value, to indicate no parent exists. */
   NO_PARENT = '00000000-0000-0000-0000-000000000000',
+<<<<<<< HEAD
   /** Standard value to use whatever the submission prelim. `responseMessageId` is */
   USE_PRELIM_RESPONSE_MESSAGE_ID = 'USE_PRELIM_RESPONSE_MESSAGE_ID',
+=======
+>>>>>>> 294faaa7 (init)
   /** Standard value for the initial conversationId before a request is sent */
   NEW_CONVO = 'new',
   /** Standard value for the temporary conversationId after a request is sent and before the server responds */
@@ -1553,8 +1556,11 @@ export enum Constants {
   mcp_delimiter = '_mcp_',
   /** Prefix for MCP plugins */
   mcp_prefix = 'mcp_',
+<<<<<<< HEAD
   /** Unique value to indicate all MCP servers */
   mcp_all = 'sys__all__sys',
+=======
+>>>>>>> 294faaa7 (init)
   /** Placeholder Agent ID for Ephemeral Agents */
   EPHEMERAL_AGENT_ID = 'ephemeral',
 }

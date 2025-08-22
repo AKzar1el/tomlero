@@ -26,7 +26,11 @@ const ToolCacheKeys = {
  * @param {string[]} [options.roleIds] - Role IDs for role-based tools
  * @param {string[]} [options.groupIds] - Group IDs for group-based tools
  * @param {boolean} [options.includeGlobal=true] - Whether to include global tools
+<<<<<<< HEAD
  * @returns {Promise<LCAvailableTools|null>} The available tools object or null if not cached
+=======
+ * @returns {Promise<Object|null>} The available tools object or null if not cached
+>>>>>>> 294faaa7 (init)
  */
 async function getCachedTools(options = {}) {
   const cache = getLogStores(CacheKeys.CONFIG_STORE);
@@ -41,13 +45,21 @@ async function getCachedTools(options = {}) {
   // Future implementation will merge tools from multiple sources
   // based on user permissions, roles, and groups
   if (userId) {
+<<<<<<< HEAD
     /** @type {LCAvailableTools | null} Check if we have pre-computed effective tools for this user */
+=======
+    // Check if we have pre-computed effective tools for this user
+>>>>>>> 294faaa7 (init)
     const effectiveTools = await cache.get(ToolCacheKeys.EFFECTIVE(userId));
     if (effectiveTools) {
       return effectiveTools;
     }
 
+<<<<<<< HEAD
     /** @type {LCAvailableTools | null} Otherwise, compute from individual sources */
+=======
+    // Otherwise, compute from individual sources
+>>>>>>> 294faaa7 (init)
     const toolSources = [];
 
     if (includeGlobal) {

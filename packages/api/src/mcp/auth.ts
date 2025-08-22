@@ -7,6 +7,7 @@ import { getPluginAuthMap } from '~/agents/auth';
 export async function getUserMCPAuthMap({
   userId,
   tools,
+<<<<<<< HEAD
   servers,
   toolInstances,
   findPluginAuthsByKeys,
@@ -57,6 +58,35 @@ export async function getUserMCPAuthMap({
     }
 
     mcpPluginKeysToFetch = Array.from(uniqueMcpServers);
+=======
+  findPluginAuthsByKeys,
+}: {
+  userId: string;
+  tools: GenericTool[] | undefined;
+  findPluginAuthsByKeys: PluginAuthMethods['findPluginAuthsByKeys'];
+}) {
+  if (!tools || tools.length === 0) {
+    return {};
+  }
+
+  const uniqueMcpServers = new Set<string>();
+
+  for (const tool of tools) {
+    const mcpTool = tool as GenericTool & { mcpRawServerName?: string };
+    if (mcpTool.mcpRawServerName) {
+      uniqueMcpServers.add(`${Constants.mcp_prefix}${mcpTool.mcpRawServerName}`);
+    }
+  }
+
+  if (uniqueMcpServers.size === 0) {
+    return {};
+  }
+
+  const mcpPluginKeysToFetch = Array.from(uniqueMcpServers);
+
+  let allMcpCustomUserVars: Record<string, Record<string, string>> = {};
+  try {
+>>>>>>> 294faaa7 (init)
     allMcpCustomUserVars = await getPluginAuthMap({
       userId,
       pluginKeys: mcpPluginKeysToFetch,

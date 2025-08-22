@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import { PermissionTypes, Permissions } from 'librechat-data-provider';
 import type { Document } from 'mongoose';
 import { CursorPaginationParams } from '~/common';
+=======
+import { Document } from 'mongoose';
+import { PermissionTypes, Permissions } from 'librechat-data-provider';
+>>>>>>> 294faaa7 (init)
 
 export interface IRole extends Document {
   name: string;
@@ -49,6 +54,7 @@ export interface IRole extends Document {
     };
   };
 }
+<<<<<<< HEAD
 
 export type RolePermissions = IRole['permissions'];
 type DeepPartial<T> = {
@@ -71,3 +77,5 @@ export interface RoleFilterOptions extends CursorPaginationParams {
   search?: string;
   hasPermission?: string;
 }
+=======
+>>>>>>> 294faaa7 (init)

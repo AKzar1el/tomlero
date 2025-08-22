@@ -1,12 +1,16 @@
 const { z } = require('zod');
 const { tool } = require('@langchain/core/tools');
 const { logger } = require('@librechat/data-schemas');
+<<<<<<< HEAD
 const {
   Providers,
   StepTypes,
   GraphEvents,
   Constants: AgentConstants,
 } = require('@librechat/agents');
+=======
+const { Constants: AgentConstants, Providers, GraphEvents } = require('@librechat/agents');
+>>>>>>> 294faaa7 (init)
 const {
   sendEvent,
   MCPOAuthHandler,
@@ -16,14 +20,24 @@ const {
 const {
   Time,
   CacheKeys,
+<<<<<<< HEAD
+=======
+  StepTypes,
+>>>>>>> 294faaa7 (init)
   Constants,
   ContentTypes,
   isAssistantsEndpoint,
 } = require('librechat-data-provider');
+<<<<<<< HEAD
 const { getCachedTools, loadCustomConfig } = require('./Config');
 const { findToken, createToken, updateToken } = require('~/models');
 const { getMCPManager, getFlowStateManager } = require('~/config');
 const { reinitMCPServer } = require('./Tools/mcp');
+=======
+const { findToken, createToken, updateToken } = require('~/models');
+const { getMCPManager, getFlowStateManager } = require('~/config');
+const { getCachedTools, loadCustomConfig } = require('./Config');
+>>>>>>> 294faaa7 (init)
 const { getLogStores } = require('~/cache');
 
 /**
@@ -31,6 +45,7 @@ const { getLogStores } = require('~/cache');
  * @param {ServerResponse} params.res - The Express response object for sending events.
  * @param {string} params.stepId - The ID of the step in the flow.
  * @param {ToolCallChunk} params.toolCall - The tool call object containing tool information.
+<<<<<<< HEAD
  */
 function createRunStepDeltaEmitter({ res, stepId, toolCall }) {
   /**
@@ -38,6 +53,18 @@ function createRunStepDeltaEmitter({ res, stepId, toolCall }) {
    * @returns {void}
    */
   return function (authURL) {
+=======
+ * @param {string} params.loginFlowId - The ID of the login flow.
+ * @param {FlowStateManager<any>} params.flowManager - The flow manager instance.
+ */
+function createOAuthStart({ res, stepId, toolCall, loginFlowId, flowManager, signal }) {
+  /**
+   * Creates a function to handle OAuth login requests.
+   * @param {string} authURL - The URL to redirect the user for OAuth authentication.
+   * @returns {Promise<boolean>} Returns true to indicate the event was sent successfully.
+   */
+  return async function (authURL) {
+>>>>>>> 294faaa7 (init)
     /** @type {{ id: string; delta: AgentToolCallDelta }} */
     const data = {
       id: stepId,
@@ -48,6 +75,7 @@ function createRunStepDeltaEmitter({ res, stepId, toolCall }) {
         expires_at: Date.now() + Time.TWO_MINUTES,
       },
     };
+<<<<<<< HEAD
     sendEvent(res, { event: GraphEvents.ON_RUN_STEP_DELTA, data });
   };
 }
@@ -96,6 +124,19 @@ function createOAuthStart({ flowId, flowManager, callback }) {
       logger.debug('Sent OAuth login request to client');
       return true;
     });
+=======
+    /** Used to ensure the handler (use of `sendEvent`) is only invoked once */
+    await flowManager.createFlowWithHandler(
+      loginFlowId,
+      'oauth_login',
+      async () => {
+        sendEvent(res, { event: GraphEvents.ON_RUN_STEP_DELTA, data });
+        logger.debug('Sent OAuth login request to client');
+        return true;
+      },
+      signal,
+    );
+>>>>>>> 294faaa7 (init)
   };
 }
 
@@ -138,6 +179,7 @@ function createAbortHandler({ userId, serverName, toolName, flowManager }) {
 }
 
 /**
+<<<<<<< HEAD
  * @param {Object} params
  * @param {() => void} params.runStepEmitter
  * @param {(authURL: string) => void} params.runStepDeltaEmitter
@@ -298,6 +340,25 @@ async function createMCPTool({
 }
 
 function createToolInstance({ res, toolName, serverName, toolDefinition, provider: _provider }) {
+=======
+ * Creates a general tool for an entire action set.
+ *
+ * @param {Object} params - The parameters for loading action sets.
+ * @param {ServerRequest} params.req - The Express request object, containing user/request info.
+ * @param {ServerResponse} params.res - The Express response object for sending events.
+ * @param {string} params.toolKey - The toolKey for the tool.
+ * @param {import('@librechat/agents').Providers | EModelEndpoint} params.provider - The provider for the tool.
+ * @param {string} params.model - The model for the tool.
+ * @returns { Promise<typeof tool | { _call: (toolInput: Object | string) => unknown}> } An object with `_call` method to execute the tool input.
+ */
+async function createMCPTool({ req, res, toolKey, provider: _provider }) {
+  const availableTools = await getCachedTools({ userId: req.user?.id, includeGlobal: true });
+  const toolDefinition = availableTools?.[toolKey]?.function;
+  if (!toolDefinition) {
+    logger.error(`Tool ${toolKey} not found in available tools`);
+    return null;
+  }
+>>>>>>> 294faaa7 (init)
   /** @type {LCTool} */
   const { description, parameters } = toolDefinition;
   const isGoogle = _provider === Providers.VERTEXAI || _provider === Providers.GOOGLE;
@@ -310,8 +371,21 @@ function createToolInstance({ res, toolName, serverName, toolDefinition, provide
     schema = z.object({ input: z.string().optional() });
   }
 
+<<<<<<< HEAD
   const normalizedToolKey = `${toolName}${Constants.mcp_delimiter}${normalizeServerName(serverName)}`;
 
+=======
+  const [toolName, serverName] = toolKey.split(Constants.mcp_delimiter);
+  const normalizedToolKey = `${toolName}${Constants.mcp_delimiter}${normalizeServerName(serverName)}`;
+
+  if (!req.user?.id) {
+    logger.error(
+      `[MCP][${serverName}][${toolName}] User ID not found on request. Cannot create tool.`,
+    );
+    throw new Error(`User ID not found on request. Cannot create tool for ${toolKey}.`);
+  }
+
+>>>>>>> 294faaa7 (init)
   /** @type {(toolArguments: Object | string, config?: GraphRunnableConfig) => Promise<unknown>} */
   const _call = async (toolArguments, config) => {
     const userId = config?.configurable?.user?.id || config?.configurable?.user_id;
@@ -328,6 +402,7 @@ function createToolInstance({ res, toolName, serverName, toolDefinition, provide
       const provider = (config?.metadata?.provider || _provider)?.toLowerCase();
 
       const { args: _args, stepId, ...toolCall } = config.toolCall ?? {};
+<<<<<<< HEAD
       const flowId = `${serverName}:oauth_login:${config.metadata.thread_id}:${config.metadata.run_id}`;
       const runStepDeltaEmitter = createRunStepDeltaEmitter({
         res,
@@ -338,6 +413,16 @@ function createToolInstance({ res, toolName, serverName, toolDefinition, provide
         flowId,
         flowManager,
         callback: runStepDeltaEmitter,
+=======
+      const loginFlowId = `${serverName}:oauth_login:${config.metadata.thread_id}:${config.metadata.run_id}`;
+      const oauthStart = createOAuthStart({
+        res,
+        stepId,
+        toolCall,
+        loginFlowId,
+        flowManager,
+        signal: derivedSignal,
+>>>>>>> 294faaa7 (init)
       });
       const oauthEnd = createOAuthEnd({
         res,
@@ -383,7 +468,11 @@ function createToolInstance({ res, toolName, serverName, toolDefinition, provide
       return result;
     } catch (error) {
       logger.error(
+<<<<<<< HEAD
         `[MCP][${serverName}][${toolName}][User: ${userId}] Error calling MCP tool:`,
+=======
+        `[MCP][User: ${userId}][${serverName}] Error calling "${toolName}" MCP tool:`,
+>>>>>>> 294faaa7 (init)
         error,
       );
 
@@ -396,12 +485,20 @@ function createToolInstance({ res, toolName, serverName, toolDefinition, provide
 
       if (isOAuthError) {
         throw new Error(
+<<<<<<< HEAD
           `[MCP][${serverName}][${toolName}] OAuth authentication required. Please check the server logs for the authentication URL.`,
+=======
+          `OAuth authentication required for ${serverName}. Please check the server logs for the authentication URL.`,
+>>>>>>> 294faaa7 (init)
         );
       }
 
       throw new Error(
+<<<<<<< HEAD
         `[MCP][${serverName}][${toolName}] tool call failed${error?.message ? `: ${error?.message}` : '.'}`,
+=======
+        `"${toolKey}" tool call failed${error?.message ? `: ${error?.message}` : '.'}`,
+>>>>>>> 294faaa7 (init)
       );
     } finally {
       // Clean up abort handler to prevent memory leaks
@@ -556,7 +653,10 @@ async function getServerConnectionStatus(
 
 module.exports = {
   createMCPTool,
+<<<<<<< HEAD
   createMCPTools,
+=======
+>>>>>>> 294faaa7 (init)
   getMCPSetupData,
   checkOAuthFlowStatus,
   getServerConnectionStatus,

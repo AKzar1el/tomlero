@@ -9,6 +9,7 @@ const {
 const { disposeClient, clientRegistry, requestDataMap } = require('~/server/cleanup');
 const { saveMessage } = require('~/models');
 
+<<<<<<< HEAD
 function createCloseHandler(abortController) {
   return function (manual) {
     if (!manual) {
@@ -27,6 +28,8 @@ function createCloseHandler(abortController) {
   };
 }
 
+=======
+>>>>>>> 294faaa7 (init)
 const AgentController = async (req, res, next, initializeClient, addTitle) => {
   let {
     text,
@@ -49,6 +52,10 @@ const AgentController = async (req, res, next, initializeClient, addTitle) => {
   let userMessagePromise;
   let getAbortData;
   let client = null;
+<<<<<<< HEAD
+=======
+  // Initialize as an array
+>>>>>>> 294faaa7 (init)
   let cleanupHandlers = [];
 
   const newConvo = !conversationId;
@@ -79,7 +86,13 @@ const AgentController = async (req, res, next, initializeClient, addTitle) => {
   // Create a function to handle final cleanup
   const performCleanup = () => {
     logger.debug('[AgentController] Performing cleanup');
+<<<<<<< HEAD
     if (Array.isArray(cleanupHandlers)) {
+=======
+    // Make sure cleanupHandlers is an array before iterating
+    if (Array.isArray(cleanupHandlers)) {
+      // Execute all cleanup handlers
+>>>>>>> 294faaa7 (init)
       for (const handler of cleanupHandlers) {
         try {
           if (typeof handler === 'function') {
@@ -120,6 +133,7 @@ const AgentController = async (req, res, next, initializeClient, addTitle) => {
   };
 
   try {
+<<<<<<< HEAD
     let prelimAbortController = new AbortController();
     const prelimCloseHandler = createCloseHandler(prelimAbortController);
     res.on('close', prelimCloseHandler);
@@ -147,6 +161,10 @@ const AgentController = async (req, res, next, initializeClient, addTitle) => {
       removePrelimHandler(true);
       cleanupHandlers.pop();
     }
+=======
+    /** @type {{ client: TAgentClient }} */
+    const result = await initializeClient({ req, res, endpointOption });
+>>>>>>> 294faaa7 (init)
     client = result.client;
 
     // Register client with finalization registry if available
@@ -178,7 +196,26 @@ const AgentController = async (req, res, next, initializeClient, addTitle) => {
     };
 
     const { abortController, onStart } = createAbortController(req, res, getAbortData, getReqData);
+<<<<<<< HEAD
     const closeHandler = createCloseHandler(abortController);
+=======
+
+    // Simple handler to avoid capturing scope
+    const closeHandler = () => {
+      logger.debug('[AgentController] Request closed');
+      if (!abortController) {
+        return;
+      } else if (abortController.signal.aborted) {
+        return;
+      } else if (abortController.requestCompleted) {
+        return;
+      }
+
+      abortController.abort();
+      logger.debug('[AgentController] Request aborted on close');
+    };
+
+>>>>>>> 294faaa7 (init)
     res.on('close', closeHandler);
     cleanupHandlers.push(() => {
       try {
@@ -200,7 +237,10 @@ const AgentController = async (req, res, next, initializeClient, addTitle) => {
       abortController,
       overrideParentMessageId,
       isEdited: !!editedContent,
+<<<<<<< HEAD
       userMCPAuthMap: result.userMCPAuthMap,
+=======
+>>>>>>> 294faaa7 (init)
       responseMessageId: editedResponseMessageId,
       progressOptions: {
         res,

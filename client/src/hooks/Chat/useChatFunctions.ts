@@ -230,19 +230,28 @@ export default function useChatFunctions({
 
     const responseMessageId =
       editedMessageId ??
+<<<<<<< HEAD
       (latestMessage?.messageId && isRegenerate
         ? latestMessage.messageId.replace(/_+$/, '') + '_'
         : null) ??
       null;
     const initialResponseId =
       responseMessageId ?? `${isRegenerate ? messageId : intermediateId}`.replace(/_+$/, '') + '_';
+=======
+      (latestMessage?.messageId && isRegenerate ? latestMessage?.messageId + '_' : null) ??
+      null;
+>>>>>>> 294faaa7 (init)
 
     const initialResponse: TMessage = {
       sender: responseSender,
       text: '',
       endpoint: endpoint ?? '',
       parentMessageId: isRegenerate ? messageId : intermediateId,
+<<<<<<< HEAD
       messageId: initialResponseId,
+=======
+      messageId: responseMessageId ?? `${isRegenerate ? messageId : intermediateId}_`,
+>>>>>>> 294faaa7 (init)
       thread_id,
       conversationId,
       unfinished: false,

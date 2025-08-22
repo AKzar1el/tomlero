@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 const { isEnabled } = require('@librechat/api');
+=======
+const { logger } = require('@librechat/data-schemas');
+const { isEnabled, getUserMCPAuthMap } = require('@librechat/api');
+>>>>>>> 294faaa7 (init)
 const { CacheKeys, EModelEndpoint } = require('librechat-data-provider');
 const { normalizeEndpointName } = require('~/server/utils');
 const loadCustomConfig = require('./loadCustomConfig');
@@ -53,6 +58,34 @@ const getCustomEndpointConfig = async (endpoint) => {
 };
 
 /**
+<<<<<<< HEAD
+=======
+ * @param {Object} params
+ * @param {string} params.userId
+ * @param {GenericTool[]} [params.tools]
+ * @param {import('@librechat/data-schemas').PluginAuthMethods['findPluginAuthsByKeys']} params.findPluginAuthsByKeys
+ * @returns {Promise<Record<string, Record<string, string>> | undefined>}
+ */
+async function getMCPAuthMap({ userId, tools, findPluginAuthsByKeys }) {
+  try {
+    if (!tools || tools.length === 0) {
+      return;
+    }
+    return await getUserMCPAuthMap({
+      tools,
+      userId,
+      findPluginAuthsByKeys,
+    });
+  } catch (err) {
+    logger.error(
+      `[api/server/controllers/agents/client.js #chatCompletion] Error getting custom user vars for agent`,
+      err,
+    );
+  }
+}
+
+/**
+>>>>>>> 294faaa7 (init)
  * @returns {Promise<boolean>}
  */
 async function hasCustomUserVars() {
@@ -62,6 +95,10 @@ async function hasCustomUserVars() {
 }
 
 module.exports = {
+<<<<<<< HEAD
+=======
+  getMCPAuthMap,
+>>>>>>> 294faaa7 (init)
   getCustomConfig,
   getBalanceConfig,
   hasCustomUserVars,

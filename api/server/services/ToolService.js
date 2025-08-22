@@ -1,9 +1,15 @@
 const fs = require('fs');
 const path = require('path');
 const { sleep } = require('@librechat/agents');
+<<<<<<< HEAD
 const { logger } = require('@librechat/data-schemas');
 const { zodToJsonSchema } = require('zod-to-json-schema');
 const { getToolkitKey, getUserMCPAuthMap } = require('@librechat/api');
+=======
+const { getToolkitKey } = require('@librechat/api');
+const { logger } = require('@librechat/data-schemas');
+const { zodToJsonSchema } = require('zod-to-json-schema');
+>>>>>>> 294faaa7 (init)
 const { Calculator } = require('@langchain/community/tools/calculator');
 const { tool: toolFn, Tool, DynamicStructuredTool } = require('@langchain/core/tools');
 const {
@@ -33,17 +39,24 @@ const {
   toolkits,
 } = require('~/app/clients/tools');
 const { processFileURL, uploadImageBuffer } = require('~/server/services/Files/process');
+<<<<<<< HEAD
 const {
   getEndpointsConfig,
   hasCustomUserVars,
   getCachedTools,
 } = require('~/server/services/Config');
+=======
+const { getEndpointsConfig, getCachedTools } = require('~/server/services/Config');
+>>>>>>> 294faaa7 (init)
 const { createOnSearchResults } = require('~/server/services/Tools/search');
 const { isActionDomainAllowed } = require('~/server/services/domains');
 const { recordUsage } = require('~/server/services/Threads');
 const { loadTools } = require('~/app/clients/tools/util');
 const { redactMessage } = require('~/config/parsers');
+<<<<<<< HEAD
 const { findPluginAuthsByKeys } = require('~/models');
+=======
+>>>>>>> 294faaa7 (init)
 
 /**
  * Loads and formats tools from the specified tool directory.
@@ -474,12 +487,20 @@ async function processRequiredActions(client, requiredActions) {
  * @param {Object} params - Run params containing user and request information.
  * @param {ServerRequest} params.req - The request object.
  * @param {ServerResponse} params.res - The request object.
+<<<<<<< HEAD
  * @param {AbortSignal} params.signal
  * @param {Pick<Agent, 'id' | 'provider' | 'model' | 'tools'} params.agent - The agent to load tools for.
  * @param {string | undefined} [params.openAIApiKey] - The OpenAI API key.
  * @returns {Promise<{ tools?: StructuredTool[]; userMCPAuthMap?: Record<string, Record<string, string>> }>} The agent tools.
  */
 async function loadAgentTools({ req, res, agent, signal, tool_resources, openAIApiKey }) {
+=======
+ * @param {Pick<Agent, 'id' | 'provider' | 'model' | 'tools'} params.agent - The agent to load tools for.
+ * @param {string | undefined} [params.openAIApiKey] - The OpenAI API key.
+ * @returns {Promise<{ tools?: StructuredTool[] }>} The agent tools.
+ */
+async function loadAgentTools({ req, res, agent, tool_resources, openAIApiKey }) {
+>>>>>>> 294faaa7 (init)
   if (!agent.tools || agent.tools.length === 0) {
     return {};
   } else if (agent.tools && agent.tools.length === 1 && agent.tools[0] === AgentCapabilities.ocr) {
@@ -529,6 +550,7 @@ async function loadAgentTools({ req, res, agent, signal, tool_resources, openAIA
     webSearchCallbacks = createOnSearchResults(res);
   }
 
+<<<<<<< HEAD
   /** @type {Record<string, Record<string, string>>} */
   let userMCPAuthMap;
   if (await hasCustomUserVars()) {
@@ -543,6 +565,10 @@ async function loadAgentTools({ req, res, agent, signal, tool_resources, openAIA
     agent,
     signal,
     userMCPAuthMap,
+=======
+  const { loadedTools, toolContextMap } = await loadTools({
+    agent,
+>>>>>>> 294faaa7 (init)
     functions: true,
     user: req.user.id,
     tools: _agentTools,
@@ -606,7 +632,10 @@ async function loadAgentTools({ req, res, agent, signal, tool_resources, openAIA
   if (!checkCapability(AgentCapabilities.actions)) {
     return {
       tools: agentTools,
+<<<<<<< HEAD
       userMCPAuthMap,
+=======
+>>>>>>> 294faaa7 (init)
       toolContextMap,
     };
   }
@@ -618,7 +647,10 @@ async function loadAgentTools({ req, res, agent, signal, tool_resources, openAIA
     }
     return {
       tools: agentTools,
+<<<<<<< HEAD
       userMCPAuthMap,
+=======
+>>>>>>> 294faaa7 (init)
       toolContextMap,
     };
   }
@@ -727,7 +759,10 @@ async function loadAgentTools({ req, res, agent, signal, tool_resources, openAIA
   return {
     tools: agentTools,
     toolContextMap,
+<<<<<<< HEAD
     userMCPAuthMap,
+=======
+>>>>>>> 294faaa7 (init)
   };
 }
 

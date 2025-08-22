@@ -19,10 +19,14 @@ const AgentClient = require('~/server/controllers/agents/client');
 const { getAgent } = require('~/models/Agent');
 const { logViolation } = require('~/cache');
 
+<<<<<<< HEAD
 /**
  * @param {AbortSignal} signal
  */
 function createToolLoader(signal) {
+=======
+function createToolLoader() {
+>>>>>>> 294faaa7 (init)
   /**
    * @param {object} params
    * @param {ServerRequest} params.req
@@ -32,11 +36,15 @@ function createToolLoader(signal) {
    * @param {string} params.provider
    * @param {string} params.model
    * @param {AgentToolResources} params.tool_resources
+<<<<<<< HEAD
    * @returns {Promise<{
    * tools: StructuredTool[],
    * toolContextMap: Record<string, unknown>,
    * userMCPAuthMap?: Record<string, Record<string, string>>
    * } | undefined>}
+=======
+   * @returns {Promise<{ tools: StructuredTool[], toolContextMap: Record<string, unknown> } | undefined>}
+>>>>>>> 294faaa7 (init)
    */
   return async function loadTools({ req, res, agentId, tools, provider, model, tool_resources }) {
     const agent = { id: agentId, tools, provider, model };
@@ -45,7 +53,10 @@ function createToolLoader(signal) {
         req,
         res,
         agent,
+<<<<<<< HEAD
         signal,
+=======
+>>>>>>> 294faaa7 (init)
         tool_resources,
       });
     } catch (error) {
@@ -54,7 +65,11 @@ function createToolLoader(signal) {
   };
 }
 
+<<<<<<< HEAD
 const initializeClient = async ({ req, res, signal, endpointOption }) => {
+=======
+const initializeClient = async ({ req, res, endpointOption }) => {
+>>>>>>> 294faaa7 (init)
   if (!endpointOption) {
     throw new Error('Endpoint option not provided');
   }
@@ -100,7 +115,11 @@ const initializeClient = async ({ req, res, signal, endpointOption }) => {
   /** @type {Set<string>} */
   const allowedProviders = new Set(req?.app?.locals?.[EModelEndpoint.agents]?.allowedProviders);
 
+<<<<<<< HEAD
   const loadTools = createToolLoader(signal);
+=======
+  const loadTools = createToolLoader();
+>>>>>>> 294faaa7 (init)
   /** @type {Array<MongoFile>} */
   const requestFiles = req.body.files ?? [];
   /** @type {string} */
@@ -119,7 +138,10 @@ const initializeClient = async ({ req, res, signal, endpointOption }) => {
   });
 
   const agent_ids = primaryConfig.agent_ids;
+<<<<<<< HEAD
   let userMCPAuthMap = primaryConfig.userMCPAuthMap;
+=======
+>>>>>>> 294faaa7 (init)
   if (agent_ids?.length) {
     for (const agentId of agent_ids) {
       const agent = await getAgent({ id: agentId });
@@ -149,7 +171,10 @@ const initializeClient = async ({ req, res, signal, endpointOption }) => {
         endpointOption,
         allowedProviders,
       });
+<<<<<<< HEAD
       Object.assign(userMCPAuthMap, config.userMCPAuthMap ?? {});
+=======
+>>>>>>> 294faaa7 (init)
       agentConfigs.set(agentId, config);
     }
   }
@@ -198,7 +223,11 @@ const initializeClient = async ({ req, res, signal, endpointOption }) => {
         : EModelEndpoint.agents,
   });
 
+<<<<<<< HEAD
   return { client, userMCPAuthMap };
+=======
+  return { client };
+>>>>>>> 294faaa7 (init)
 };
 
 module.exports = { initializeClient };

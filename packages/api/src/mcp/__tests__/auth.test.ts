@@ -45,7 +45,11 @@ describe('getUserMCPAuthMap', () => {
         },
       ];
 
+<<<<<<< HEAD
       const toolInstances = testCases.map((testCase) =>
+=======
+      const tools = testCases.map((testCase) =>
+>>>>>>> 294faaa7 (init)
         createMockTool(testCase.normalizedToolName, testCase.originalName),
       );
 
@@ -54,7 +58,11 @@ describe('getUserMCPAuthMap', () => {
 
       await getUserMCPAuthMap({
         userId: 'user123',
+<<<<<<< HEAD
         toolInstances,
+=======
+        tools,
+>>>>>>> 294faaa7 (init)
         findPluginAuthsByKeys: mockFindPluginAuthsByKeys,
       });
 
@@ -69,7 +77,11 @@ describe('getUserMCPAuthMap', () => {
 
   describe('Edge Cases', () => {
     it('should return empty object when no tools have mcpRawServerName', async () => {
+<<<<<<< HEAD
       const toolInstances = [
+=======
+      const tools = [
+>>>>>>> 294faaa7 (init)
         createMockTool('regular_tool', undefined, false),
         createMockTool('another_tool', undefined, false),
         createMockTool('test_mcp_Server_no_raw_name', undefined),
@@ -77,7 +89,11 @@ describe('getUserMCPAuthMap', () => {
 
       const result = await getUserMCPAuthMap({
         userId: 'user123',
+<<<<<<< HEAD
         toolInstances,
+=======
+        tools,
+>>>>>>> 294faaa7 (init)
         findPluginAuthsByKeys: mockFindPluginAuthsByKeys,
       });
 
@@ -104,14 +120,22 @@ describe('getUserMCPAuthMap', () => {
     });
 
     it('should handle database errors gracefully', async () => {
+<<<<<<< HEAD
       const toolInstances = [createMockTool('test_mcp_Server1', 'Server1')];
+=======
+      const tools = [createMockTool('test_mcp_Server1', 'Server1')];
+>>>>>>> 294faaa7 (init)
       const dbError = new Error('Database connection failed');
 
       mockGetPluginAuthMap.mockRejectedValue(dbError);
 
       const result = await getUserMCPAuthMap({
         userId: 'user123',
+<<<<<<< HEAD
         toolInstances,
+=======
+        tools,
+>>>>>>> 294faaa7 (init)
         findPluginAuthsByKeys: mockFindPluginAuthsByKeys,
       });
 
@@ -119,18 +143,27 @@ describe('getUserMCPAuthMap', () => {
     });
 
     it('should handle non-Error exceptions gracefully', async () => {
+<<<<<<< HEAD
       const toolInstances = [createMockTool('test_mcp_Server1', 'Server1')];
+=======
+      const tools = [createMockTool('test_mcp_Server1', 'Server1')];
+>>>>>>> 294faaa7 (init)
 
       mockGetPluginAuthMap.mockRejectedValue('String error');
 
       const result = await getUserMCPAuthMap({
         userId: 'user123',
+<<<<<<< HEAD
         toolInstances,
+=======
+        tools,
+>>>>>>> 294faaa7 (init)
         findPluginAuthsByKeys: mockFindPluginAuthsByKeys,
       });
 
       expect(result).toEqual({});
     });
+<<<<<<< HEAD
 
     it('should handle mixed null/undefined values in tools array', async () => {
       const tools = [
@@ -232,6 +265,8 @@ describe('getUserMCPAuthMap', () => {
         mcp_Server3: { API_KEY: 'key3' },
       });
     });
+=======
+>>>>>>> 294faaa7 (init)
   });
 
   describe('Integration', () => {
@@ -239,7 +274,11 @@ describe('getUserMCPAuthMap', () => {
       const originalServerName = 'Connector: Company';
       const toolName = 'test_auth_mcp_Connector__Company';
 
+<<<<<<< HEAD
       const toolInstances = [createMockTool(toolName, originalServerName)];
+=======
+      const tools = [createMockTool(toolName, originalServerName)];
+>>>>>>> 294faaa7 (init)
 
       const mockCustomUserVars = {
         'mcp_Connector: Company': {
@@ -252,7 +291,11 @@ describe('getUserMCPAuthMap', () => {
 
       const result = await getUserMCPAuthMap({
         userId: 'user123',
+<<<<<<< HEAD
         toolInstances,
+=======
+        tools,
+>>>>>>> 294faaa7 (init)
         findPluginAuthsByKeys: mockFindPluginAuthsByKeys,
       });
 

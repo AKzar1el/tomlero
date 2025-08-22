@@ -182,7 +182,11 @@ export default function useEventHandlers({
   const { token } = useAuthContext();
 
   const contentHandler = useContentHandler({ setMessages, getMessages });
+<<<<<<< HEAD
   const { stepHandler, clearStepMaps } = useStepHandler({
+=======
+  const stepHandler = useStepHandler({
+>>>>>>> 294faaa7 (init)
     setMessages,
     getMessages,
     announcePolite,
@@ -806,7 +810,10 @@ export default function useEventHandlers({
   );
 
   return {
+<<<<<<< HEAD
     clearStepMaps,
+=======
+>>>>>>> 294faaa7 (init)
     stepHandler,
     syncHandler,
     finalHandler,

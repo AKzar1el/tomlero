@@ -1,6 +1,9 @@
 /* MCP */
 export * from './mcp/MCPManager';
+<<<<<<< HEAD
 export * from './mcp/connection';
+=======
+>>>>>>> 294faaa7 (init)
 export * from './mcp/oauth';
 export * from './mcp/auth';
 export * from './mcp/zod';
