@@ -52,8 +52,8 @@ export default defineConfig(({ command }) => ({
       },
       includeAssets: [],
       manifest: {
-        name: 'Tolmero',
-        short_name: 'Tolmero',
+        name: 'Tomlero',
+        short_name: 'Tomlero',
         start_url: '/',
         display: 'standalone',
         background_color: '#000000',

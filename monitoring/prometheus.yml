@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "librechat"
+    # exporter serves metrics at '/' per README
+    metrics_path: "/"
+    static_configs:
+      # if Prometheus is containerized (as above), scrape the Docker DNS name
+      - targets: ["metrics:8000"]
