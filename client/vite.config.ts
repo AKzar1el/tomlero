@@ -52,8 +52,8 @@ export default defineConfig(({ command }) => ({
       },
       includeAssets: [],
       manifest: {
-        name: 'LibreChat',
-        short_name: 'LibreChat',
+        name: 'Tolmero',
+        short_name: 'Tolmero',
         start_url: '/',
         display: 'standalone',
         background_color: '#000000',
@@ -70,7 +70,7 @@ export default defineConfig(({ command }) => ({
             type: 'image/png',
           },
           {
-            src: '/assets/apple-touch-icon-180x180.png',
+            src: '/assets/apple-touch-icon.png',
             sizes: '180x180',
             type: 'image/png',
           },
